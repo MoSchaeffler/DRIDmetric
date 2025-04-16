@@ -10,8 +10,8 @@ from calcDRID import DRID
 define topology and trajectory path
 """
 
-top = '/path/to/my/topology.tpr'
-traj = '/path/to/my/trajectory.xtc'
+top = "/path/to/my/topology.tpr"
+traj = "/path/to/my/trajectory.xtc"
 
 """
 define selection for centroids and reference atoms in the MDAnalysis selection style
@@ -25,7 +25,7 @@ sel_atoms = "protein"
 
 """
 Define name of the output file containing the framewise DRID metric of the system
-saved as npy array
+saved as .npy array
 """
 
 outname = "DRID_myprotein"
@@ -34,5 +34,5 @@ outname = "DRID_myprotein"
 ############  Run  ############
 ###############################
 
-df = DRID(top,traj,sel_atoms,sel_cent)
+df = DRID(top, traj, sel_atoms, sel_cent)
 df.run(outname)

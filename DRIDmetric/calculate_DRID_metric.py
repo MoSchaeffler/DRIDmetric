@@ -8,33 +8,30 @@ from MDAnalysis.analysis.distances import distance_array as darray
 
 
 class DRID(object):
-    """Calculate the firs three moments of the 
-    Distribution of Reciprocal Interatomic Distances (DRID) 
+    """Calculate the firs three moments of the
+    Distribution of Reciprocal Interatomic Distances (DRID)
     for a given Molecular Dynamics trajectory
 
     Parameters
     ----------
     top:
         Topology file (GRO/TPR/PDB/etc.)
-    
+
     traj:
         Trajectory file (XTC/TRR/DATA/etc.)
 
     centroid_selection:
         string with MDAnalysis selection syntax for the centroids
         e.g. "(name CA and resid 28) or (name CA and resid 23) or (name CA and resid 1) ..."
-        
+
     atom_selection:
         string with MDAnalysis selection syntax for the reference group
         e.g. "protein"
     """
 
-    def __init__(self,
-                 top:str,
-                 traj:str,
-                 atom_selection:str,
-                 centroid_selection:str
-                 ) -> None:
+    def __init__(
+        self, top: str, traj: str, atom_selection: str, centroid_selection: str
+    ) -> None:
 
         # create universe
         self.u = mda.Universe(top, traj)
@@ -54,9 +51,7 @@ class DRID(object):
 
         print("Number of atoms selected: {}".format(self.Na))
 
-    def run(self,
-            outname:str="DRID"
-    ) -> None:
+    def run(self, outname: str = "DRID") -> None:
         """Method for calculating the DRID metric for each frame of the input trajecory
         saves the output as numpy array
 
@@ -101,10 +96,8 @@ class DRID(object):
         np.save(outname, drid)
         print("DRID calculation complete and saved.")
 
-
-    def get_moments(self, 
-                c_pos:np.ndarray,
-                atom_pos:np.ndarray
+    def get_moments(
+        self, c_pos: np.ndarray, atom_pos: np.ndarray
     ) -> tuple[float, float, float]:
         """Method for calculating the first three moments of the DRID
 
