@@ -92,7 +92,7 @@ class DRID(object):
 
                 # calculate moments
 
-                mu[i], nu[i], xi[i] = self.moments(cent.position, atoms.positions)
+                mu[i], nu[i], xi[i] = self.get_moments(cent.position, atoms.positions)
 
             drid[f, :, 0] = mu
             drid[f, :, 1] = nu
@@ -102,7 +102,7 @@ class DRID(object):
         print("DRID calculation complete and saved.")
 
 
-    def moments(self, 
+    def get_moments(self, 
                 c_pos:np.ndarray,
                 atom_pos:np.ndarray
     ) -> tuple[float, float, float]:
