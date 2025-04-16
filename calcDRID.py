@@ -1,22 +1,44 @@
 #!/usr/bin/python3
 
-import numpy as np
 
-# MD Analysis for loading trajectories
+import numpy as np
+from tqdm import tqdm
 import MDAnalysis as mda
 from MDAnalysis.analysis.distances import distance_array as darray
 
 
 class DRID(object):
+    """Calculate the firs three moments of the 
+    Distribution of Reciprocal Interatomic Distances (DRID) 
+    for a given Molecular Dynamics trajectory
 
-    def __init__(self, top, traj, atom_selection, centroid_selection):
+    Parameters
+    ----------
+    top:
+        Topology file (GRO/TPR/PDB/etc.)
+    
+    traj:
+        Trajectory file (XTC/TRR/DATA/etc.)
+
+    centroid_selection:
+        string with MDAnalysis selection syntax for the centroids
+        e.g. "(name CA and resid 28) or (name CA and resid 23) or (name CA and resid 1) ..."
+        
+    atom_selection:
+        string with MDAnalysis selection syntax for the reference group
+        e.g. "protein"
+    """
+
+    def __init__(self,
+                 top:str,
+                 traj:str,
+                 atom_selection:str,
+                 centroid_selection:str
+                 ) -> None:
 
         # create universe
         self.u = mda.Universe(top, traj)
-
         self.Nf = len(self.u.trajectory)
-
-        print("Trajectory length {}".format(self.Nf))
 
         # get disjoined atom/centroid groups
         self.centroids = self.u.select_atoms(centroid_selection)
@@ -32,13 +54,23 @@ class DRID(object):
 
         print("Number of atoms selected: {}".format(self.Na))
 
-    def run(self, outname="DRID"):
+    def run(self,
+            outname:str="DRID"
+    ) -> None:
+        """Method for calculating the DRID metric for each frame of the input trajecory
+        saves the output as numpy array
 
-        print("Start Calculating DRID")
+        Parameters
+        ----------
+        outname:
+            name of the output file
+        """
+
+        print("Start Calculating DRID.")
 
         drid = np.zeros((self.Nf, self.Nc, 3))
 
-        for f in range(self.Nf):
+        for f in tqdm(range(self.Nf), desc="Processing frames"):
 
             self.u.trajectory[f]
             # box = self.u.dimensions
@@ -62,21 +94,32 @@ class DRID(object):
 
                 mu[i], nu[i], xi[i] = self.moments(cent.position, atoms.positions)
 
-            # write to coord file
             drid[f, :, 0] = mu
             drid[f, :, 1] = nu
             drid[f, :, 2] = xi
 
-            try:
-                if f % int(self.Nf / 10) == 1:
-                    print(int(f / self.Nf * 100), '%')
-            except:
-                continue
+        np.save(outname, drid)
+        print("DRID calculation complete and saved.")
 
-        np.save(outname + ".npy", drid)
 
-    # first moment of DRID
-    def moments(self, c_pos, atom_pos):
+    def moments(self, 
+                c_pos:np.ndarray,
+                atom_pos:np.ndarray
+    ) -> tuple[float, float, float]:
+        """Method for calculating the first three moments of the DRID
+
+        Parameters
+        ----------
+        c_pos:
+            Position vector of the centroid
+        atom_pos:
+            (n,3) dimensional array of refernce atom position vectors
+
+        Returns
+        -------
+        Tuple:
+            Float values of first three moments
+        """
 
         dij = darray(c_pos, atom_pos)
         s = np.sum(1 / dij)
