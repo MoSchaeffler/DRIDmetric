@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-from calcDRID import DRID
+from DRIDmetric import DRID
 
 ###############################
 ############ Input ############
