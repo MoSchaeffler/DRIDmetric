@@ -70,7 +70,7 @@ class DRID(object):
 
         print("Number of atoms selected: {}".format(self.Na))
 
-    def run(self, outname: str = "DRID") -> None:
+    def run(self, outname: str = "DRID") -> np.array:
         """Method for calculating the DRID metric for each frame of the input trajecory
         saves the output as numpy array
 
