@@ -49,6 +49,11 @@ The dependencies should be intalled automatically alongside the package
 ---
 
 ## 2) Running the example
+To run the example clone the github repository:
+```bash
+git clone git+http://github.com/MoSchaeffler/DRIDmetric.git
+```
+and navigate to the example subfolder.
 
 The main way to use this package is via the provided `calc_DRID.py` script. 
 Edit: 
