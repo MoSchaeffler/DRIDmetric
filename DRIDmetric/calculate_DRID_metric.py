@@ -112,8 +112,15 @@ class DRID(object):
             drid[f, :, 1] = nu
             drid[f, :, 2] = xi
 
-        np.save(outname, drid)
-        print("DRID calculation complete and saved.")
+        ### save drid trajectory
+        results_dir = "results"
+        os.makedirs(results_dir, exist_ok=True)
+
+        # save in results directory
+        outfile = os.path.join(results_dir, f"{outname}.npy")
+        np.save(outfile, drid)
+
+        print(f"DRID calculation complete and saved to {outfile}.")
         return drid
 
     def get_moments(
