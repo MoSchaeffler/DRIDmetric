@@ -1,0 +1,3 @@
+# Exclude the root-level example folder from source distributions
+prune example
+recursive-exclude example *
