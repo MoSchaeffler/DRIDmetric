@@ -22,42 +22,42 @@ The DRID representation is a **structure-preserving dimensionality reduction met
 ## Mathematical Definition
 
 Given:
-- a set of **m centroids** \( C = \{c_i\} \),  
-- a set of **N reference atoms** \( A = \{a_j\} \), excluding covalently bound neighbors,  
+- a set of **m centroids** $ C = \{c_i\} $,  
+- a set of **N reference atoms** $ A = \{a_j\} $, excluding covalently bound neighbors,  
 
 the distribution of **reciprocal distances** is defined by:  
 
-\[
+$$
 d_{ij} = \| c_i - a_j \|, \quad \text{with reciprocal } \frac{1}{d_{ij}}
-\]
+$$
 
 The **first three moments** for centroid \(i\) are:
 
-\[
+$$
 \mu_i = \frac{1}{N-1-n_b^i} \sum_j \frac{1}{d_{ij}}
-\]
+$$
 
-\[
+$$
 \nu_i = \left[ \frac{1}{N-1-n_b^i} \sum_j \frac{1}{(d_{ij}-\mu_i)^2} \right]^{1/2}
-\]
+$$
 
-\[
+$$
 \xi_i = \left[ \frac{1}{N-1-n_b^i} \sum_j \frac{1}{(d_{ij}-\mu_i)^3} \right]^{1/3}
-\]
+$$
 
-where \( n_b^i \) is the number of covalent bonds for centroid \(c_i\).  
+where $ n_b^i $ is the number of covalent bonds for centroid $c_i$.  
 
 The DRID vector of a frame is then a **3m-dimensional vector**:  
 
-\[
+$$
 (\mu_1,\nu_1,\xi_1,\;\ldots,\;\mu_m,\nu_m,\xi_m)
-\]
+$$
 
-The **distance metric** between two conformations \(j\) and \(k\) in DRID space is:  
+The **distance metric** between two conformations $j$ and $k$ in DRID space is:  
 
-\[
+$$
 s_{jk} = \frac{1}{3m} \sum_{i=1}^m \left[ (\mu_i^j-\mu_i^k)^2 + (\nu_i^j-\nu_i^k)^2 + (\xi_i^j-\xi_i^k)^2 \right]^{1/2}
-\]
+$$
 
 ---
 
