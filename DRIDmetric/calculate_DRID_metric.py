@@ -1,11 +1,14 @@
 #!/usr/bin/python3
 
-
+import os
 import numpy as np
 from tqdm import tqdm
 import MDAnalysis as mda
 from MDAnalysis.analysis.distances import distance_array as darray
 
+def _abs_status(p):
+    ap = os.path.abspath(os.path.expanduser(os.path.expandvars(p)))
+    return ap, "OK" if os.path.exists(ap) else "MISSING"
 
 class DRID(object):
     """Calculate the firs three moments of the
@@ -34,7 +37,23 @@ class DRID(object):
     ) -> None:
 
         # create universe
-        self.u = mda.Universe(top, traj)
+        try:
+            self.u = mda.Universe(top, traj)
+        except (OSError, AttributeError) as e:
+            top_abs, top_status = _abs_status(top)
+            traj_abs, traj_status = _abs_status(traj)
+            cwd = os.getcwd()
+            raise FileNotFoundError(
+                "\n############################################################################\n"
+                "Failed to load MDAnalysis Universe. One or more input paths may be wrong.\n"
+                f"  Topology: {top_abs}  [{top_status}]\n"
+                f"  Trajectory: {traj_abs}  [{traj_status}]\n"
+                f"  Working directory: {cwd}\n"
+                "Tip: ensure the files exist at these absolute paths, or adjust your input \n"
+                "to point to the correct location (expand ~, env vars, and relative paths).\n"
+                "############################################################################\n"
+            ) from e
+
         self.Nf = len(self.u.trajectory)
 
         # get disjoined atom/centroid groups
@@ -95,6 +114,7 @@ class DRID(object):
 
         np.save(outname, drid)
         print("DRID calculation complete and saved.")
+        return drid
 
     def get_moments(
         self, c_pos: np.ndarray, atom_pos: np.ndarray
