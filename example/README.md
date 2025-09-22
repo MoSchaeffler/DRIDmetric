@@ -64,8 +64,8 @@ Example (for the Aβ42 test data in `data/`):
 from DRIDmetric import DRID
 
 # Input files
-top = "data/run_noW_1.tpr"
-traj = "data/run_dt20ps_noW_1.xtc"
+top = "data/Abeta42.tpr"
+traj = "data/Abeta42.xtc"
 
 # Atom/centroid selections (MDAnalysis syntax)
 sel_cent = "(name CA and resid 28) or (name CA and resid 23) or (name CA and resid 1) or (name CA and resid 42) or (name CA and resid 19) or (name CA and resid 34)"
@@ -81,7 +81,7 @@ calc.run(outname)
 
 This will produce a NumPy `.npy` file (`results/DRID_abeta42.npy`) containing the framewise DRID metric.
 
-** Note: **
+**Note:**
 The centroid selction is specific to each molecule. Either make an educated choice e.g. choose CA of residues that are crucial to the process under study, or choose CA of equidistantly spaced residues e.g.  "(name CA and resid 1) or (name CA and resid 6) or (name CA and resid 11) ...". While a more educated selection can improve results, consequent analysis of the dynamics of the system with for example the freeEnergyCalculation package has been shown to be relatively robust against the selection of centroids (https://doi.org/10.1039/D4CC02856B).
 
 ---
