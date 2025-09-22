@@ -10,8 +10,8 @@ from DRIDmetric import DRID
 define topology and trajectory path
 """
 
-top = "/path/to/my/topology.tpr"
-traj = "/path/to/my/trajectory.xtc"
+top  = "./data/Abeta42.tpr"
+traj = "./data/Abeta42.xtc"
 
 """
 define selection for centroids and reference atoms in the MDAnalysis selection style
@@ -28,7 +28,7 @@ Define name of the output file containing the framewise DRID metric of the syste
 saved as .npy array
 """
 
-outname = "DRID_myprotein"
+outname = "DRID_Abeta42"
 
 ###############################
 ############  Run  ############
