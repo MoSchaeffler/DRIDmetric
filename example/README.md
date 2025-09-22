@@ -35,7 +35,7 @@ source .venv/bin/activate  # Windows: .venv\Scripts\activate
 ### Install packckage + dependencies
 
 ```bash
-pip install -e git+http://github.com/MoSchaeffler/DRIDmetric.git#egg=DRIDmetric
+pip install git+http://github.com/MoSchaeffler/DRIDmetric.git#egg=DRIDmetric
 ```
 
 Dependencies:
