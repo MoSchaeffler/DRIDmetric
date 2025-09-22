@@ -22,8 +22,8 @@ The DRID representation is a **structure-preserving dimensionality reduction met
 ## Mathematical Definition
 
 Given:
-- a set of **m centroids** $ C = \{c_i\} $,  
-- a set of **N reference atoms** $ A = \{a_j\} $, excluding covalently bound neighbors,  
+- a set of **m centroids** $C=\{c_i\}_{i=1}^m$,  
+- a set of **N reference atoms** $A=\{a_j\}_{j=1}^{N}$, excluding covalently bound neighbors,  
 
 the distribution of **reciprocal distances** is defined by:  
 
