@@ -51,7 +51,7 @@ The dependencies should be intalled automatically alongside the package
 ## 2) Running the example
 To run the example clone the github repository:
 ```bash
-git clone git+http://github.com/MoSchaeffler/DRIDmetric.git
+git clone http://github.com/MoSchaeffler/DRIDmetric.git
 ```
 and navigate to the example subfolder.
 
